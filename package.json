@@ -1,0 +1,34 @@
+{
+  "name": "reedee",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint **/*.js",
+    "webpack": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://derycktse@github.com/derycktse/reedee.git"
+  },
+  "author": "Derycktse",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/derycktse/reedee/issues"
+  },
+  "homepage": "https://github.com/derycktse/reedee#readme",
+  "devDependencies": {
+    "babel-loader": "^7.0.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "electron": "^1.6.10",
+    "eslint": "^3.19.0",
+    "eslint-plugin-react": "^7.0.1",
+    "webpack": "^2.6.1"
+  },
+  "dependencies": {
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  }
+}
