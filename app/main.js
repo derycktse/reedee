@@ -1,8 +1,10 @@
-import React from 'react'
+
 import ReactDOM from 'react-dom'
+ 
+import List from './components/list.jsx'
 
 ReactDOM.render(
-  <h1>Hello, Deryck!</h1>,
+  <List />,
   document.getElementById('root')
-);
+)
 
