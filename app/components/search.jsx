@@ -4,7 +4,9 @@ class Search extends React.Component{
   render(){
     return (
       <div>
+        <button></button>
         <input type="text"/>
+        <button></button>
       </div>
     )
   }
