@@ -1,8 +1,7 @@
 
 import ReactDOM from 'react-dom'
- 
+import React from 'react' 
 import List from './components/list.jsx'
-import react from 'react'
 
 ReactDOM.render(
   <List />,
