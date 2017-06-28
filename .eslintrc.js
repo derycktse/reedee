@@ -33,6 +33,12 @@ module.exports = {
             "error",
             "never"
         ],
-        "no-unused-vars" : 1
+        "no-unused-vars": 1,
+        
+        /**
+         * https://github.com/eslint/eslint/issues/6303
+         * 'NewComponent' is defined but never used no-unused-vars
+         */
+        "react/jsx-uses-vars": [2]
     }
 };
