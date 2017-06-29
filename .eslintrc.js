@@ -25,16 +25,16 @@ module.exports = {
             "error",
             "unix"
         ],
-        "quotes": [
-            "error",
-            "single"
-        ],
+        // "quotes": [
+        //     "error",
+        //     "double"
+        // ],
         "semi": [
             "error",
             "never"
         ],
         "no-unused-vars": 1,
-        
+
         /**
          * https://github.com/eslint/eslint/issues/6303
          * 'NewComponent' is defined but never used no-unused-vars
