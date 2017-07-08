@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
+import styles from './Subscription-menu.css';
 
-const Subscription = () => {
+const SubscriptionItem = ({
+  subscriptionName = 'subscriptionName',
+  scrabTime = '2017-01-01',
+  title = 'subscript title',
+  contentPreview = 'content preview'
+}) => {
   return (
     <li>
-      <p><span>date</span></p>
-      <p>title</p>
-      <p>content preview</p>
+      <p><span>{subscriptionName}</span><span>{scrabTime}</span></p>
+      <p>{title}</p>
+      <p>{contentPreview}</p>
     </li>
   )
 }
@@ -20,9 +26,19 @@ const FilterBox = () => {
 
 export default class SubscriptionMenu extends Component {
   render() {
+    let props = this.props
+    let subscriptionList = [1, 2, 3, 5]
     return (
-      <div>
-        <Subscription />
+      <div id="subscription-menu">
+        <ul className="subscpt-set">
+          {
+            subscriptionList.map((sub, idx) => {
+              return (
+                <SubscriptionItem key={idx} />
+              )
+            })
+          }
+        </ul>
         <FilterBox />
       </div>
     );
