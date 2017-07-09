@@ -1,0 +1,8 @@
+.subscriptionFolderContainter{
+  height: 100%;
+  float: left;
+}
+
+.subscriptionFolder{
+  border: 1px solid black;
+}
