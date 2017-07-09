@@ -5,7 +5,7 @@ import styles from './Reedee.css'
 export default class Reedee extends Component {
   render() {
     return (
-      <div>
+      <div id="reedee">
         <SubscriptionFolder className={styles.subscriptionFolder} />
         <SubscriptionMenu className={styles.subscriptionMenu} />
       </div>

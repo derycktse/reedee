@@ -37,3 +37,10 @@ a:hover {
   text-decoration: none;
   cursor: pointer;
 }
+
+/*
+* Reedee style
+*/
+#reedee>div{
+  float: left
+}
