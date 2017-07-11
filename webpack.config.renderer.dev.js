@@ -42,6 +42,7 @@ export default merge.smart(baseConfig, {
     'webpack/hot/only-dev-server',
     path.join(__dirname, 'app/index.js'),
     path.join(__dirname, 'authentication/index.js'),
+    path.join(__dirname, 'server/server.js')
   ],
 
   output: {
