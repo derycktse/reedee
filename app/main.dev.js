@@ -71,7 +71,7 @@ app.on('ready', async () => {
   })
 
   // Load a remote URL
-  win.loadURL(`https://www.inoreader.com/oauth2/auth?client_id=1000000516&redirect_uri=file://${__dirname}/app.html&response_type=code&state=4G1B6NyBT4k32COltK3DWlQBINZ14EB_`)
+  win.loadURL(`https://www.inoreader.com/reader/api/0/user-info?AppId=&AppKey=`)
 
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
