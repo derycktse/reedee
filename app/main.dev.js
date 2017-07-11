@@ -65,6 +65,15 @@ app.on('ready', async () => {
     height: 728
   });
 
+  let win = new BrowserWindow({ width: 800, height: 600 })
+  win.on('closed', () => {
+    win = null
+  })
+
+  // Load a remote URL
+  win.loadURL(`https://www.inoreader.com/oauth2/auth?client_id=1000000516&redirect_uri=file://${__dirname}/app.html&response_type=code&state=4G1B6NyBT4k32COltK3DWlQBINZ14EB_`)
+
+
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
   // @TODO: Use 'ready-to-show' event
