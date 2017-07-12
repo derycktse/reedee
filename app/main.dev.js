@@ -106,6 +106,7 @@ app.on('ready', async () => {
 ipcMain.on('oauth', (event) => {
   debugger
   oauth.getAccessToken({}).then(token => {
+    console.log(token)
     debugger
   })
 })
