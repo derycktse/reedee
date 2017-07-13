@@ -107,6 +107,6 @@ ipcMain.on('oauth', (event) => {
   oauth.getAccessToken(
     { scope: 'read' }
   ).then(tokenObj => {
-    console.log(token)
+    console.log(tokenObj)
   })
 })
