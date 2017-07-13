@@ -25,6 +25,9 @@ const FilterBox = () => {
 }
 
 export default class SubscriptionMenu extends Component {
+  componentDidMount() {
+
+  }
   render() {
     let props = this.props
     let subscriptionList = [1, 2, 3, 5]

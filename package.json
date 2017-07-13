@@ -185,7 +185,9 @@
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "electron-debug": "^1.1.0",
+    "electron-oauth2": "^3.0.0",
     "font-awesome": "^4.7.0",
     "history": "^4.6.1",
     "koa": "^2.3.0",
@@ -198,6 +200,7 @@
     "react-router-redux": "^5.0.0-alpha.6",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
+    "request": "^2.81.0",
     "source-map-support": "^0.4.15"
   },
   "devEngines": {

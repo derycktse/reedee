@@ -10,7 +10,7 @@
  *
  * @flow
  */
-import { app, BrowserWindow } from 'electron';
+import { app, ipcMain, BrowserWindow } from 'electron';
 import MenuBuilder from './menu';
 
 let mainWindow = null;
@@ -53,6 +53,15 @@ app.on('window-all-closed', () => {
   }
 });
 
+const electronOauth2 = require('electron-oauth2')
+import { oauthConfig } from '../config/'
+const oauth = electronOauth2(oauthConfig, {
+  alwaysOnTop: true,
+  autoHideMenuBar: true,
+  webPreferences: {
+    nodeIntegration: false
+  }
+})
 
 app.on('ready', async () => {
   if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
@@ -64,6 +73,15 @@ app.on('ready', async () => {
     width: 1024,
     height: 728
   });
+
+  // let win = new BrowserWindow({ width: 800, height: 600 })
+  // win.on('closed', () => {
+  //   win = null
+  // })
+
+  // // Load a remote URL
+  // win.loadURL(`https://www.inoreader.com/reader/api/0/user-info?AppId=&AppKey=`)
+
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
@@ -84,3 +102,11 @@ app.on('ready', async () => {
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
 });
+
+ipcMain.on('oauth', (event) => {
+  oauth.getAccessToken(
+    { scope: 'read' }
+  ).then(tokenObj => {
+    console.log(tokenObj)
+  })
+})
