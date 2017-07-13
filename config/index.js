@@ -13,5 +13,6 @@ const oauthConfig = {
 }
 
 export default {
-  oauthConfig
+  oauthConfig,
+  auth
 }
