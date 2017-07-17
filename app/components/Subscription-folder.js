@@ -80,6 +80,7 @@ class SubscriptionFolder extends React.Component {
 
             return (
               <div className={styles.subscriptionFolder} key={idx}>
+                <div>{folderName.replace(/.*\//, '')}</div>
                 <ul>
                   {
                     subscriptionFolderMap[folderName].subscriptions.map((subscrpt, subIndex) => {
