@@ -57,16 +57,6 @@ class SubscriptionFolder extends React.Component {
     this.state = {}
   }
   componentDidMount() {
-    // fetch('http://localhost:3000/subscription/list').then(res => {
-    //   return res.json()
-    // }).then(data => {
-    //   let subscriptions = data.subscriptions
-
-    //   console.log(subscriptions)
-    //   this.setState({
-    //     subscriptions
-    //   })
-    // })
   }
   render() {
     const props = this.props
