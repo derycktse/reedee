@@ -6,6 +6,7 @@ import styles from './Reedee.css'
 
 export default class Reedee extends Component {
   render() {
+    const { subscriptions } = this.props
     return (
       <div id="reedee">
         <SubscriptionFolder className={styles.subscriptionFolder} />
