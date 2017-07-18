@@ -61,12 +61,9 @@ class SubscriptionFolder extends React.Component {
                 <ul>
                   {
                     folder.subscriptions.map((subscrpt) => {
-                      let title = subscrpt.title
-                        , icon = subscrpt.iconUrl
-
-                      const id = subscrpt.id
+                      const { id, title, iconUrl } = subscrpt
                       const obj = {
-                        title, icon
+                        title, icon: iconUrl
                       }
                       return <Subscription key={id} {...obj} />
                     })
