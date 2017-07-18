@@ -14,10 +14,10 @@ const Subscription = ({ icon, title }) => {
 
 
 const mapSubscriptions = (subscriptions = [], tags = []) => {
-  let mapper = {}
+  const mapper = {}
   tags.forEach(val => {
     console.log(val)
-    let key = val.id.replace(/\\\//g, '/')
+    const key = val.id.replace(/\\\//g, '/')
     mapper[key] = val
     mapper[key]["subscriptions"] = []
   })
@@ -32,26 +32,11 @@ const mapSubscriptions = (subscriptions = [], tags = []) => {
   return mapper
 }
 
-//_.uniqBy(array, [iteratee=_.identity])
-const extractFolder = (subscriptions = []) => {
-  const categoriesArr = _.map(subscriptions, ({ categories }) => {
-    return categories
-  }) || []
-
-  let folder = _.uniqWith(categoriesArr, _.isEqual) || []
-  folder = folder.map(category => {
-    category["subscriptions"] = _.filter(subscriptions, (sub) => {
-      return sub.categories[0].id === category[0].id
-    }
-    )
-    return category
-  }
-  )
-  return folder
-}
-
-
 class SubscriptionFolder extends React.Component {
+  static propTypes = {
+    subscriptions: React.PropTypes.array,
+    tags: React.PropTypes.array
+  }
   constructor(props) {
     super(props)
     this.state = {}
@@ -59,20 +44,10 @@ class SubscriptionFolder extends React.Component {
   componentDidMount() {
   }
   render() {
-    const props = this.props
-    let folders = [123, 123, 123]
-    // const state = this.state
-    // const subscriptions = []
     const { subscriptions, tags } = this.props
-    let subscriptionFolder = extractFolder(subscriptions)
-    console.log('subscript -foler')
-    console.log(subscriptions)
-    console.log('tag')
-    console.log(tags)
-
-    let subscriptionFolderMap = mapSubscriptions(subscriptions, tags)
+    const subscriptionFolderMap = mapSubscriptions(subscriptions, tags)
     console.log(subscriptionFolderMap)
-    folders = Object.keys(subscriptionFolderMap)
+    const folders = Object.keys(subscriptionFolderMap)
     return (
       <div id="subscription-folder" className={styles.subscriptionFolderContainter}>
         {
@@ -87,7 +62,7 @@ class SubscriptionFolder extends React.Component {
 
                       let title = subscrpt.title
                         , icon = subscrpt.iconUrl
-                      let obj = {
+                      const obj = {
                         title, icon
                       }
                       return <Subscription key={subIndex} {...obj} />
@@ -102,5 +77,4 @@ class SubscriptionFolder extends React.Component {
     )
   }
 }
-
 export default SubscriptionFolder
