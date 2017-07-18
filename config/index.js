@@ -1,5 +1,5 @@
 import auth from './auth'
-
+import apiList from './api'
 const oauthConfig = {
   clientId: process.env.GITHUB_CLIENT_ID || auth.AppId,
   clientSecret: process.env.GITHUB_CLIENT_SECRET || auth.AppKey,
@@ -14,5 +14,6 @@ const oauthConfig = {
 
 export default {
   oauthConfig,
-  auth
+  auth,
+  apiList
 }

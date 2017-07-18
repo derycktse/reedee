@@ -1,16 +1,16 @@
 
 import Express from 'express'
 import axios from 'axios'
-import { auth } from '../config'
+import { auth, apiList } from '../config'
 import { parse } from 'url'
 
 const PORT = 3000
 const app = new Express()
 
 let instance = axios.create({
-  baseURL: 'https://www.inoreader.com/reader/api/0',
+  baseURL: 'https://www.inoreader.com',
   timeout: 10000,
-  headers: { 'Authorization': 'Bearer 0ec4ee04d0816d421aa3737f25e601eac5dcbd54' }
+  headers: { 'Authorization': 'Bearer 860a6ab083563edb1f45ecb3fff1db4207734419' }
 })
 
 let AppId = auth.AppId,
@@ -18,9 +18,11 @@ let AppId = auth.AppId,
 
 
 app.use('*', (req, res, next) => {
-  let params = req.params
-  let urlParts = parse(req.url)
-  instance.get(`${req.baseUrl}?${urlParts.query || ''}`, {
+  const params = req.params
+  const urlParts = parse(req.url)
+  const apiName = req.baseUrl.replace(/^\//, '')
+  const target = apiList['prefix'] + apiList[apiName].api
+  instance.get(`${target}?${urlParts.query || ''}`, {
     params: {
       AppId, AppKey, ...params
     }

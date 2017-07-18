@@ -9,12 +9,22 @@ try {
 const subscriptions = (JSON.parse(subscriptionsSerialize) || {}).subscriptions || []
 const tags = (JSON.parse(tagListSerialize) || {}).tags || []
 
+// write data to local storage
+function writeToLocal() {
+
+}
+
 export default function reedee(state = { subscriptions, tags }, action) {
   switch (action.type) {
     case 'FETCH_SUBSCRIPTION_LIST':
       return {
-        ...state,
-        type: 'FETCH_SUBSCRIPTION_LIST'
+        ...state
+      }
+    case 'SYNC':
+      console.log('sync')
+      console.log(action)
+      return {
+        ...state
       }
     default:
       return state
