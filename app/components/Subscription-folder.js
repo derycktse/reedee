@@ -51,21 +51,24 @@ class SubscriptionFolder extends React.Component {
     return (
       <div id="subscription-folder" className={styles.subscriptionFolderContainter}>
         {
-          folders.map((folderName, idx) => {
+          folders.map((folderName) => {
+            const folder = subscriptionFolderMap[folderName]
 
+            if (folder.subscriptions.length === 0) return null
             return (
-              <div className={styles.subscriptionFolder} key={idx}>
+              <div className={styles.subscriptionFolder} key={folder.id}>
                 <div>{folderName.replace(/.*\//, '')}</div>
                 <ul>
                   {
-                    subscriptionFolderMap[folderName].subscriptions.map((subscrpt, subIndex) => {
-
+                    folder.subscriptions.map((subscrpt) => {
                       let title = subscrpt.title
                         , icon = subscrpt.iconUrl
+
+                      const id = subscrpt.id
                       const obj = {
                         title, icon
                       }
-                      return <Subscription key={subIndex} {...obj} />
+                      return <Subscription key={id} {...obj} />
                     })
                   }
                 </ul>
