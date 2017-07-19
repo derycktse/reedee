@@ -36,6 +36,11 @@ export default function reedee(state = { subscriptions, tags }, action) {
         ...state,
         subscriptions: action.payload
       }
+    case 'UPDATE_DATA':
+      return {
+        ...state,
+        ...action.payload
+      }
     default:
       return state
   }
