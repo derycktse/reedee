@@ -6,10 +6,14 @@ import styles from './Reedee.css'
 
 export default class Reedee extends Component {
   render() {
+    const { syncTagList, syncSubscriptionList } = this.props
     return (
       <div id="reedee">
-        <button onClick={this.props.syncData}>sync data</button>
-        <SubscriptionFolder className={styles.subscriptionFolder} {...this.props} />
+        <button onClick={()=>{
+          syncTagList()
+          syncSubscriptionList()
+          }}>sync data</button>
+        <SubscriptionFolder classNam e={styles.subscriptionFolder} {...this.props} />
         <SubscriptionMenu className={styles.subscriptionMenu} />
       </div>
     )

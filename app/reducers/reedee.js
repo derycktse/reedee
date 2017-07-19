@@ -26,6 +26,16 @@ export default function reedee(state = { subscriptions, tags }, action) {
       return {
         ...state
       }
+    case 'UPDATE_TAG_LIST':
+      return {
+        ...state,
+        tags: action.payload
+      }
+    case 'UPDATE_SUBSCRIPTION_LIST':
+      return {
+        ...state,
+        subscriptions: action.payload
+      }
     default:
       return state
   }

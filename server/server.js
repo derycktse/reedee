@@ -10,7 +10,7 @@ const app = new Express()
 let instance = axios.create({
   baseURL: 'https://www.inoreader.com',
   timeout: 10000,
-  headers: { 'Authorization': 'Bearer 860a6ab083563edb1f45ecb3fff1db4207734419' }
+  headers: { 'Authorization': 'Bearer 031064d0951e16e38d3427ba72f51a78d4b30ba3' }
 })
 
 let AppId = auth.AppId,

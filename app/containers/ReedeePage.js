@@ -1,5 +1,7 @@
 import { connect } from 'react-redux'
 import Reedee from '../components/reedee'
+import { bindActionCreators } from 'redux'
+import * as ReedeeActions from '../actions/reedee'
 
 function mapStateToProps(state) {
   return {
@@ -10,18 +12,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    syncData() {
-      fetch('http://localhost:3000/tag-list').then(res => res.json()).then(data => {
-        dispatch(
-          {
-            type: 'SYNC',
-            data
-          }
-        )
-      })
-    }
-  }
+  return bindActionCreators(ReedeeActions, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Reedee)
