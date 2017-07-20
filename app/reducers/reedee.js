@@ -9,12 +9,19 @@ try {
 const subscriptions = (JSON.parse(subscriptionsSerialize) || {}).subscriptions || []
 const tags = (JSON.parse(tagListSerialize) || {}).tags || []
 
-// write data to local storage
-function writeToLocal() {
 
+function getInitState(...names) {
+  let obj = {}
+  names.forEach(name => {
+    obj[name] = JSON.parse(window.localStorage.getItem(name)) || {}
+  })
+  return obj
 }
 
-export default function reedee(state = { subscriptions, tags }, action) {
+const initState = getInitState('subscription-list', 'tag-list', 'unread-count')
+console.log('init state:')
+console.log(initState)
+export default function reedee(state = initState, action) {
   switch (action.type) {
     case 'FETCH_SUBSCRIPTION_LIST':
       return {

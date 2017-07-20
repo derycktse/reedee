@@ -50,7 +50,7 @@ const apiList = {
     type: '2'
   },
   'unread-count': {
-    api: `${prefix}/unread-count`,
+    api: `/unread-count`,
     type: '1'
   },
   'edit-tag': {

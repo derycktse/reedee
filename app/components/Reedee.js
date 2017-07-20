@@ -25,12 +25,15 @@ export default class Reedee extends Component {
       return Promise.resolve()
     })
     const fetchSubscriptions = this.fetchData('subscription-list').then(data => {
-      this.storeData('subscriptions', data)
+      this.storeData('subscription-list', data)
       return Promise.resolve()
     })
-
-    Promise.all([fetchTagList, fetchSubscriptions]).then(() => {
-      readLocalData(["subscriptions", 'tag-list'])
+    const fetchUnreadCount = this.fetchData('unread-count').then(data => {
+      this.storeData('unread-count', data)
+      return Promise.resolve()
+    })
+    Promise.all([fetchTagList, fetchSubscriptions, fetchUnreadCount]).then(() => {
+      readLocalData(["subscription-list", 'tag-list'])
     })
   }
   render() {

@@ -39,16 +39,17 @@ export function readLocalData(names) {
   return (dispatch) => {
     const items = (typeof names === 'string') ? [names] : names
 
-    let obj = {}
+    const obj = {}
     items.forEach(name => {
-      obj = {
-        ...obj,
-        ...(JSON.parse(localStorage.getItem(name)) || {})
-      }
+      // obj = {
+      //   ...obj,
+      //   ...(JSON.parse(localStorage.getItem(name)) || {})
+      // }
+      obj[name] = JSON.parse(localStorage.getItem(name)) || {}
     })
     dispatch({
       type: 'UPDATE_DATA',
-      payload: { ...obj }
+      payload: obj
     })
   }
 }

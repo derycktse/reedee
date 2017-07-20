@@ -2,18 +2,28 @@ import React, { Component } from 'react'
 import styles from './Subscription-folder.css'
 import _ from 'lodash'
 
-const Subscription = ({ icon, title }) => {
+const Subscription = ({ icon, title, unreadCount }) => {
   return (
     <li>
-      <i></i>
-      <img src={icon} />
-      <span>{title}</span>
+      <div>
+        <img src={icon} alt={title} />
+        <span>{title}</span>
+      </div>
+      <div>
+        <span>{unreadCount}</span>
+      </div>
     </li>
   )
 }
 
 
-const mapSubscriptions = (subscriptions = [], tags = []) => {
+const mapSubscriptions = ({ subscriptions = [], tags = [], unreadCounts }) => {
+  const unreadCountsMapper = {}
+  unreadCounts.reduce((obj, item) => {
+    obj[item.id] = item
+    return obj
+  }, unreadCountsMapper)
+
   const mapper = {}
   tags.forEach(val => {
     console.log(val)
@@ -23,6 +33,9 @@ const mapSubscriptions = (subscriptions = [], tags = []) => {
   })
 
   subscriptions.forEach(subscription => {
+    if (unreadCountsMapper[subscription.id]) {
+      subscription.unreadCount = unreadCountsMapper[subscription.id].count
+    }
     let categories = subscription.categories
     categories.forEach(cate => {
       mapper[cate.id].subscriptions.push(subscription)
@@ -35,7 +48,8 @@ const mapSubscriptions = (subscriptions = [], tags = []) => {
 class SubscriptionFolder extends React.Component {
   static propTypes = {
     subscriptions: React.PropTypes.array,
-    tags: React.PropTypes.array
+    tags: React.PropTypes.array,
+    unreadCounts: React.PropTypes.array
   }
   constructor(props) {
     super(props)
@@ -44,8 +58,8 @@ class SubscriptionFolder extends React.Component {
   componentDidMount() {
   }
   render() {
-    const { subscriptions, tags } = this.props
-    const subscriptionFolderMap = mapSubscriptions(subscriptions, tags)
+    const { subscriptions, tags, unreadCounts } = this.props
+    const subscriptionFolderMap = mapSubscriptions({ subscriptions, tags, unreadCounts })
     console.log(subscriptionFolderMap)
     const folders = Object.keys(subscriptionFolderMap)
     return (
@@ -61,9 +75,11 @@ class SubscriptionFolder extends React.Component {
                 <ul>
                   {
                     folder.subscriptions.map((subscrpt) => {
-                      const { id, title, iconUrl } = subscrpt
+                      const { id, title, iconUrl, unreadCount } = subscrpt
                       const obj = {
-                        title, icon: iconUrl
+                        title,
+                        icon: iconUrl,
+                        unreadCount
                       }
                       return <Subscription key={id} {...obj} />
                     })

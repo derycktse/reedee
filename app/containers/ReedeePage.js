@@ -6,8 +6,9 @@ import * as ReedeeActions from '../actions/reedee'
 function mapStateToProps(state) {
   return {
     reedee: state.reedee,
-    subscriptions: state.reedee && state.reedee.subscriptions,
-    tags: state.reedee && state.reedee.tags
+    subscriptions: state.reedee && state.reedee["subscription-list"].subscriptions,
+    tags: state.reedee && state.reedee["tag-list"].tags,
+    unreadCounts: state.reedee && state.reedee["unread-count"].unreadcounts
   }
 }
 
