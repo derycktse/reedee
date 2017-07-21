@@ -55,6 +55,9 @@ class SubscriptionFolder extends React.Component {
     super(props)
     this.state = {}
   }
+  toggleFolder() {
+
+  }
   componentDidMount() {
   }
   render() {
@@ -71,7 +74,7 @@ class SubscriptionFolder extends React.Component {
             if (folder.subscriptions.length === 0) return null
             return (
               <div className={styles.subscriptionFolder} key={folder.id}>
-                <div>{folderName.replace(/.*\//, '')}</div>
+                <div><button>toggle</button>{folderName.replace(/.*\//, '')}</div>
                 <ul>
                   {
                     folder.subscriptions.map((subscrpt) => {

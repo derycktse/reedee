@@ -33,7 +33,7 @@ export default class Reedee extends Component {
       return Promise.resolve()
     })
     Promise.all([fetchTagList, fetchSubscriptions, fetchUnreadCount]).then(() => {
-      readLocalData(["subscription-list", 'tag-list'])
+      readLocalData(["subscription-list", 'tag-list', 'unread-count'])
     })
   }
   render() {
