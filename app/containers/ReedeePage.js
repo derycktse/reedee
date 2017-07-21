@@ -4,11 +4,16 @@ import { bindActionCreators } from 'redux'
 import * as ReedeeActions from '../actions/reedee'
 
 function mapStateToProps(state) {
+  const { reedee } = state
+  const { 'subscription-list': { subscriptions },
+    'tag-list': { tags },
+    'unread-count': { unreadcounts: unreadCounts }
+   } = reedee
+
   return {
-    reedee: state.reedee,
-    subscriptions: state.reedee && state.reedee["subscription-list"].subscriptions,
-    tags: state.reedee && state.reedee["tag-list"].tags,
-    unreadCounts: state.reedee && state.reedee["unread-count"].unreadcounts
+    subscriptions,
+    tags,
+    unreadCounts
   }
 }
 

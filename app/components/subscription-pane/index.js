@@ -6,7 +6,14 @@ import * as ReedeeActions from '../../actions/reedee'
 //   return null
 // }
 
-const mapSubscriptions = ({ subscriptions = [], tags = [], unreadCounts }) => {
+// const statusController = JSON.parse(localStorage.getItem('subscription-panel-status-controller')) || {}
+
+// if (typeof statusController['folderToggleInfo'] !== {})
+//   statusController['folderToggleInfo'] = {}
+
+
+const mapSubscriptions = ({ subscriptions = [], tags = [], unreadCounts,
+  statusController }) => {
   const unreadCountsMapper = {}
   unreadCounts.reduce((obj, item) => {
     obj[item.id] = item
@@ -30,39 +37,70 @@ const mapSubscriptions = ({ subscriptions = [], tags = [], unreadCounts }) => {
       mapper[cate.id].subscriptions.push(subscription)
     })
   })
+  if (!statusController['folderToggleInfo']) statusController['folderToggleInfo'] = {}
+  const folderToggleInfo = statusController['folderToggleInfo']
+  const subscriptionFolders = Object.keys(mapper).map(id => {
+    const folder = mapper[id]
+    // set folder name
+    folder['folderName'] = id.replace(/.*\//, '')
 
+    // set folder toggle info
+    if (folderToggleInfo[id]) {
+      folder.isClosed = folderToggleInfo[id].isClosed
+    }
 
-  const subscriptionFolder = Object.keys(mapper).map(id => {
-    mapper[id]['folderName'] = id.replace(/.*\//, '')
-    return mapper[id]
+    return folder
   })
 
-  return subscriptionFolder
+  return subscriptionFolders
+}
+
+const onFolderToggle = (dispatch) => (statusController) => (folderId) => {
+  const { folderToggleInfo } = statusController
+  folderToggleInfo[folderId] = folderToggleInfo[folderId] ? folderToggleInfo[folderId] : { isClosed: false }
+  folderToggleInfo[folderId].isClosed = !folderToggleInfo[folderId].isClosed
+  ReedeeActions.storeData({
+    itemName: 'subscription-panel-status-controller',
+    data: statusController
+  })
+  dispatch({
+    type: 'TOGGLE_FOLDER',
+    payload: statusController
+  })
 }
 
 function mapStateToProps(state) {
-  const { reedee: { 'subscription-list': { subscriptions }, 'tag-list': { tags }, 'unread-count': {
-    unreadcounts: unreadCounts
-  } } } = state
+  const {
+    reedee: {
+    'subscription-list': { subscriptions },
+    'tag-list': { tags },
+    'unread-count': {
+      unreadcounts: unreadCounts
+    },
+    'subscription-panel-status-controller': statusController
+ }
+} = state
 
   const subscriptionFolder = mapSubscriptions({
     subscriptions,
     tags,
-    unreadCounts
+    unreadCounts,
+    statusController
   })
   return {
-    subscriptionFolder
+    subscriptionFolder,
+    statusController
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     onSync: () => {
-      
+
       // fetch necesssary data
       const list = ["subscription-list", 'tag-list', 'unread-count']
       ReedeeActions.fetchDataCollection(list).then(collections => {
-        
+
         const payload = collections.map((data, idx) => {
           return {
             itemName: list[idx],
@@ -72,14 +110,18 @@ function mapDispatchToProps(dispatch) {
         ReedeeActions.storeData(payload)
         ReedeeActions.readLocalData(list)(dispatch)
       })
-    }
+    },
+    onFolderToggle: onFolderToggle(dispatch)
   }
 }
 
-// function mergeProps() {
-//   return {
+function mergeProps(stateProps, dispatchProps) {
 
-//   }
-// }
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    onFolderToggle: dispatchProps.onFolderToggle(stateProps.statusController)
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(SubscriptionFolderView)
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(SubscriptionFolderView)

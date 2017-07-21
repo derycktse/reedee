@@ -18,7 +18,8 @@ function getInitState(...names) {
   return obj
 }
 
-const initState = getInitState('subscription-list', 'tag-list', 'unread-count')
+const initList = ['subscription-list', 'tag-list', 'unread-count', 'subscription-panel-status-controller']
+const initState = getInitState(...initList)
 console.log('init state:')
 console.log(initState)
 export default function reedee(state = initState, action) {
@@ -47,6 +48,11 @@ export default function reedee(state = initState, action) {
       return {
         ...state,
         ...action.payload
+      }
+    case 'TOGGLE_FOLDER':
+      return {
+        ...state,
+        'subscription-panel-status-controller': action.payload
       }
     default:
       return state

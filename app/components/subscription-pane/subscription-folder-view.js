@@ -18,11 +18,17 @@ const Subscription = ({ iconUrl, title, unreadCount }) => {
 
 const Folder = ({
 folderName,
-  subscriptions
+  subscriptions,
+  onFolderToggle,
+  id,
+  isClosed
 }) => {
+  let folder = ''
   return (
-    <div>
-      <div>{folderName}</div>
+    <div ref={node => { folder = node }}>
+      <div><a onClick={() => {
+        onFolderToggle(id)
+      }}>toggle me</a>{folderName} {isClosed ? 'no' : 'yes'}</div>
       <ul>
         {
           subscriptions.map(subscription => {
@@ -36,7 +42,7 @@ folderName,
 
 class SubscriptionFolderView extends Component {
   render() {
-    const { subscriptionFolder, onSync } = this.props
+    const { subscriptionFolder, onSync, onFolderToggle } = this.props
     console.log(subscriptionFolder)
     return (
       <div>
@@ -44,7 +50,7 @@ class SubscriptionFolderView extends Component {
         {subscriptionFolder.map(folder => {
           if (folder.subscriptions.length === 0) return null
 
-          return <Folder {...folder} />
+          return <Folder {...folder} onFolderToggle={onFolderToggle} />
         })}
       </div>
     )

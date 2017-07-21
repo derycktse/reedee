@@ -12,8 +12,11 @@ const oauthConfig = {
   redirectUri: 'http://localhost'
 }
 
+const serverUrl = 'http://localhost:3000'
+
 export default {
   oauthConfig,
   auth,
-  apiList
+  apiList,
+  serverUrl
 }
