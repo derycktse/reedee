@@ -36,10 +36,11 @@ folderName,
 
 class SubscriptionFolderView extends Component {
   render() {
-    const { subscriptionFolder } = this.props
+    const { subscriptionFolder, onSync } = this.props
     console.log(subscriptionFolder)
     return (
       <div>
+        <div><button onClick={onSync}>sync from server</button></div>
         {subscriptionFolder.map(folder => {
           if (folder.subscriptions.length === 0) return null
 

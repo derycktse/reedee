@@ -7,6 +7,19 @@ export function fetchSubcriptionList() {
 }
 
 
+export function fetchDataCollection(names) {
+  if (!Array.isArray(names)) throw Error('the param must be an array')
+
+  const pmArr = names.map(name => {
+    return fetchData(name)
+  })
+  return Promise.all(pmArr)
+}
+
+export function fetchData(name) {
+  return fetch(`http://localhost:3000/${name}`).then(res => res.json()).catch(err => Promise.reject(err))
+}
+
 export function syncTagList() {
   return (dispatch) => {
     fetch('http://localhost:3000/tag-list').then(res => res.json()).then(data => {
@@ -54,12 +67,20 @@ export function readLocalData(names) {
   }
 }
 
-// export function storeData(itemName, data) {
-//   try {
-//     window.localStorage.setItem(itemName, JSON.stringify(data))
-//     console.log(`write ${itemName} data done`)
-//     return true
-//   } catch (e) {
-//     throw e
-//   }
-// }
+/**
+ * 
+ * @param {Object|Array} payload
+ */
+export function storeData(payload) {
+  const payloads = typeof payload === 'object' && !Array.isArray(payload) ? [payload] : payload
+
+  payloads.forEach(({ itemName, data }) => {
+    try {
+      window.localStorage.setItem(itemName, JSON.stringify(data))
+      console.log(`write ${itemName} data done`)
+      return true
+    } catch (e) {
+      throw e
+    }
+  })
+}

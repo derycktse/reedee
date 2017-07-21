@@ -1,6 +1,7 @@
 
 import { connect } from 'react-redux'
 import SubscriptionFolderView from './subscription-folder-view'
+import * as ReedeeActions from '../../actions/reedee'
 // const Nothing = () => {
 //   return null
 // }
@@ -32,7 +33,7 @@ const mapSubscriptions = ({ subscriptions = [], tags = [], unreadCounts }) => {
 
 
   const subscriptionFolder = Object.keys(mapper).map(id => {
-    mapper[id]['folderName'] = id
+    mapper[id]['folderName'] = id.replace(/.*\//, '')
     return mapper[id]
   })
 
@@ -54,10 +55,23 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps() {
+function mapDispatchToProps(dispatch) {
   return {
-    fun: () => {
-      console.log(123)
+    onSync: () => {
+      
+      // fetch necesssary data
+      const list = ["subscription-list", 'tag-list', 'unread-count']
+      ReedeeActions.fetchDataCollection(list).then(collections => {
+        
+        const payload = collections.map((data, idx) => {
+          return {
+            itemName: list[idx],
+            data
+          }
+        })
+        ReedeeActions.storeData(payload)
+        ReedeeActions.readLocalData(list)(dispatch)
+      })
     }
   }
 }
