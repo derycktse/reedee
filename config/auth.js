@@ -2,7 +2,8 @@
 // reedee
 const auth = {
   AppId: '1000000516',
-  AppKey: '4G1B6NyBT4k32COltK3DWlQBINZ14EB_'
+  AppKey: '4G1B6NyBT4k32COltK3DWlQBINZ14EB_',
+  tempToken: '7886deb0d40e54dabdb202bff7320398a2216fa2'
 }
 
 // github

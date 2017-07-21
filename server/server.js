@@ -6,15 +6,15 @@ import { parse } from 'url'
 
 const PORT = 3000
 const app = new Express()
-
-let instance = axios.create({
+const { AppId,
+  AppKey, tempToken } = auth
+const instance = axios.create({
   baseURL: 'https://www.inoreader.com',
   timeout: 10000,
-  headers: { 'Authorization': `Bearer ${auth.tempToken}` }
+  headers: { 'Authorization': `Bearer ${tempToken}` }
 })
 
-let AppId = auth.AppId,
-  AppKey = auth.AppKey
+
 
 
 app.use('*', (req, res, next) => {
