@@ -12,7 +12,8 @@ const oauthConfig = {
   redirectUri: 'http://localhost'
 }
 
-const serverUrl = 'http://localhost:3000'
+// const serverUrl = 'http://localhost:3000'
+const serverUrl = 'https://www.inoreader.com/'
 
 export default {
   oauthConfig,

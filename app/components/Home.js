@@ -19,6 +19,9 @@ export default class Home extends Component {
           <Link to="/counter">to Counter</Link>
           <br />
           <Link to="/reedee">to Reedee</Link>
+          <button onClick={() => {
+            ipcRenderer.send('fetch-data')
+          }}>fetch data</button>
           <button onClick={this.getToken}>get token</button>
         </div>
       </div >

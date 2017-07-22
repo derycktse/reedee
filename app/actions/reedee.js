@@ -1,3 +1,5 @@
+import * as Config from '../../config'
+
 export function fetchSubcriptionList() {
   return (dispatch) => {
     dispatch({
@@ -17,7 +19,18 @@ export function fetchDataCollection(names) {
 }
 
 export function fetchData(name) {
-  return fetch(`http://localhost:3000/${name}`).then(res => res.json()).catch(err => Promise.reject(err))
+  const apiList = Config.default.apiList
+  const auth = Config.default.auth
+  const url = `${Config.default.serverUrl}${apiList.prefix}${apiList[name].api}?AppId=${auth.AppId}&AppKey=${auth.AppKey}`
+  const token = auth.tempToken
+  return fetch(url, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  }).then(res => res.json()).catch(err => Promise.reject(err))
 }
 
 export function syncTagList() {

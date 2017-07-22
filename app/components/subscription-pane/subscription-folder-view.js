@@ -32,7 +32,7 @@ folderName,
       <ul>
         {
           subscriptions.map(subscription => {
-            return <Subscription {...subscription} />
+            return <Subscription {...subscription} key={subscription.id} />
           })
         }
       </ul>
@@ -50,7 +50,7 @@ class SubscriptionFolderView extends Component {
         {subscriptionFolder.map(folder => {
           if (folder.subscriptions.length === 0) return null
 
-          return <Folder {...folder} onFolderToggle={onFolderToggle} />
+          return <Folder {...folder} onFolderToggle={onFolderToggle} key={folder.id} />
         })}
       </div>
     )

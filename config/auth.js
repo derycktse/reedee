@@ -3,7 +3,7 @@
 const auth = {
   AppId: '1000000516',
   AppKey: '4G1B6NyBT4k32COltK3DWlQBINZ14EB_',
-  tempToken: '616d35136c67eb35af6d6d8bd3871a7c3e1f18c4'
+  tempToken: 'a1c0a3ce50e22dcb1698d081417b5aeac1611178'
 }
 
 // github
