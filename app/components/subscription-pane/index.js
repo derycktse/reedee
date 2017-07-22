@@ -22,7 +22,6 @@ const mapSubscriptions = ({ subscriptions = [], tags = [], unreadCounts,
 
   const mapper = {}
   tags.forEach(val => {
-    console.log(val)
     const key = val.id.replace(/\\\//g, '/')
     mapper[key] = val
     mapper[key]["subscriptions"] = []

@@ -14,18 +14,21 @@ const Subscription = ({ iconUrl, title, unreadCount }) => {
     </li>
   )
 }
-
+Subscription.propTypes = {
+  iconUrl: React.PropTypes.string.isRequired,
+  title: React.PropTypes.string.isRequired,
+  unreadCount: React.PropTypes.number.isRequired
+}
 
 const Folder = ({
-folderName,
-  subscriptions,
-  onFolderToggle,
+  folderName,
+  subscriptions = [],
+  onFolderToggle = () => { },
   id,
   isClosed
 }) => {
-  let folder = ''
   return (
-    <div ref={node => { folder = node }}>
+    <div >
       <div><a onClick={() => {
         onFolderToggle(id)
       }}>toggle me</a>{folderName} {isClosed ? 'no' : 'yes'}</div>
@@ -39,11 +42,16 @@ folderName,
     </div>
   )
 }
-
+Folder.propTypes = {
+  folderName: React.PropTypes.string.isRequired,
+  subscriptions: React.PropTypes.array,
+  onFolderToggle: React.PropTypes.func,
+  id: React.PropTypes.string.isRequired,
+  isClosed: React.PropTypes.bool
+}
 class SubscriptionFolderView extends Component {
   render() {
     const { subscriptionFolder, onSync, onFolderToggle } = this.props
-    console.log(subscriptionFolder)
     return (
       <div>
         <div><button onClick={onSync}>sync from server</button></div>
