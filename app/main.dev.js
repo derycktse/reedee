@@ -107,6 +107,41 @@ ipcMain.on('oauth', (event) => {
   oauth.getAccessToken(
     { scope: 'read' }
   ).then(tokenObj => {
-    console.log(tokenObj)
+    const authObj = {
+      'last-update': Date.now(),
+      'token-info': tokenObj
+    }
+    console.log(authObj)
+    event.sender.send('store-auth-info', authObj)
   })
+})
+
+ipcMain.on('refresh-token', (event) => {
+  debugger
+  oauth.refreshToken(
+    '8e4646ebe959876f6afcdb88cd6c40100e1a11c1'
+  ).then(tokenObj => {
+    const authObj = {
+      'last-update': Date.now(),
+      'token-info': tokenObj
+    }
+    console.log(authObj)
+    event.sender.send('store-auth-info', authObj)
+  })
+})
+
+ipcMain.on('fetch-data', (event, arg) => {
+  const { net } = require('electron')
+  const request = net.request('https://github.com')
+  request.on('response', (response) => {
+    console.log(`STATUS: ${response.statusCode}`)
+    console.log(`HEADERS: ${JSON.stringify(response.headers)}`)
+    response.on('data', (chunk) => {
+      console.log(`BODY: ${chunk}`)
+    })
+    response.on('end', () => {
+      console.log('No more data in response.')
+    })
+  })
+  request.end()
 })
