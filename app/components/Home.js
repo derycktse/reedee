@@ -11,9 +11,6 @@ export default class Home extends Component {
   getToken() {
     ipcRenderer.send('oauth')
   }
-  refreshToken() {
-    ipcRenderer.send('refresh-token')
-  }
   render() {
     return (
       <div>
@@ -22,7 +19,6 @@ export default class Home extends Component {
           <Link to="/counter">to Counter</Link>
           <br />
           <Link to="/reedee">to Reedee</Link>
-          <button onClick={this.refreshToken}>fetch data</button>
           <button onClick={this.getToken}>get token</button>
         </div>
       </div >

@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
-
+import styles from './subscription-folder-view.css'
 
 const Subscription = ({ iconUrl, title, unreadCount }) => {
   return (
     <li>
-      <div>
-        <img src={iconUrl} alt={title} />
-        <span>{title}</span>
+      <div className={styles['subscription-item']}>
+        <div>
+          <img src={iconUrl} alt={title} />
+          <span>{title}</span>
+        </div>
+        <div>
+          <span>{unreadCount}</span>
+        </div>
       </div>
-      <div>
-        <span>{unreadCount}</span>
-      </div>
+
     </li>
   )
 }
@@ -28,18 +31,20 @@ const Folder = ({
   isClosed
 }) => {
   return (
-    <div >
-      <div><a onClick={() => {
-        onFolderToggle(id)
-      }}>toggle me</a>{folderName} {isClosed ? 'no' : 'yes'}</div>
-      <ul>
+    <div className={styles['subscription-folder']}>
+      <div >
+        <a onClick={() => {
+          onFolderToggle(id)
+        }}><i className={isClosed ? styles.more : styles.more_unfold} ></i></a>
+        <span>{folderName} </span>{isClosed ? 'no' : 'yes'}</div>
+      <ul className={isClosed ? styles['closed'] : ''}>
         {
           subscriptions.map(subscription => {
             return <Subscription {...subscription} key={subscription.id} />
           })
         }
       </ul>
-    </div>
+    </div >
   )
 }
 Folder.propTypes = {

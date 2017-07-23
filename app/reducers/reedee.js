@@ -1,17 +1,17 @@
 
-let subscriptionsSerialize = '', tagListSerialize = ''
-try {
-  subscriptionsSerialize = localStorage.getItem('subscriptions')
-  tagListSerialize = localStorage.getItem('tag-list')
-} catch (e) {
-  // log
-}
-const subscriptions = (JSON.parse(subscriptionsSerialize) || {}).subscriptions || []
-const tags = (JSON.parse(tagListSerialize) || {}).tags || []
+// let subscriptionsSerialize = '', tagListSerialize = ''
+// try {
+//   subscriptionsSerialize = localStorage.getItem('subscriptions')
+//   tagListSerialize = localStorage.getItem('tag-list')
+// } catch (e) {
+//   // log
+// }
+// const subscriptions = (JSON.parse(subscriptionsSerialize) || {}).subscriptions || []
+// const tags = (JSON.parse(tagListSerialize) || {}).tags || []
 
 
 function getInitState(...names) {
-  let obj = {}
+  const obj = {}
   names.forEach(name => {
     obj[name] = JSON.parse(window.localStorage.getItem(name)) || {}
   })
