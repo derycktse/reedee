@@ -53,3 +53,4 @@ npm-debug.log.*
 
 config/cookie.js
 config/auth.js
+config/snippet.md

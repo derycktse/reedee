@@ -1,4 +1,47 @@
 import * as Config from '../../config'
+import { ipcRenderer } from 'electron'
+let toFetchArray = []
+
+
+ipcRenderer.on('store-auth-info', (event, authObj) => {
+  console.log('saved')
+  localStorage.setItem('auth-info', JSON.stringify(authObj))
+  // clear toFetchArray 
+  clearToFetch()
+
+})
+
+function clearToFetch() {
+  console.log(`clearToFetch`)
+  console.log(`toFetchArray.length: ${toFetchArray.length}`)
+  while (toFetchArray.length > 0) {
+    const fun = toFetchArray.splice(0, 1)[0]
+    console.log(`typeof fun:${typeof fun}`)
+    if (typeof fun === 'function') {
+      console.log('resolve function!')
+      console.log(fun)
+      fun()
+    }
+  }
+  console.log(`clearToFetch done `)
+  console.log(`toFetchArray.length: ${toFetchArray.length}`)
+}
+
+function sendAuth() {
+  ipcRenderer.send('refresh-token')
+}
+
+function authValidate() {
+  const authInfo = JSON.parse(localStorage.getItem('auth-info'))
+  const tokenInfo = authInfo["token-info"]
+  const time = Date.now() - authInfo['last-update']
+  if (time > (tokenInfo['expires_in'] * 1000)) {
+    return false
+  }
+  else {
+    return true
+  }
+}
 
 export function fetchSubcriptionList() {
   return (dispatch) => {
@@ -19,10 +62,26 @@ export function fetchDataCollection(names) {
 }
 
 export function fetchData(name) {
+  if (!authValidate()) {
+    let resolver = null
+    const pm = new Promise((resolve, reject) => {
+      resolver = resolve
+    }).then(() => {
+      return fetchData(name)
+    })
+    toFetchArray.push(resolver)
+    console.log(toFetchArray)
+    sendAuth()
+    return pm
+  }
+
+  const authInfo = JSON.parse(localStorage.getItem('auth-info'))
+  const tokenInfo = authInfo["token-info"]
+
   const apiList = Config.default.apiList
   const auth = Config.default.auth
   const url = `${Config.default.serverUrl}${apiList.prefix}${apiList[name].api}?AppId=${auth.AppId}&AppKey=${auth.AppKey}`
-  const token = auth.tempToken
+  const token = tokenInfo.access_token
   return fetch(url, {
     method: 'GET',
     headers: {
@@ -32,34 +91,6 @@ export function fetchData(name) {
     }
   }).then(res => res.json()).catch(err => Promise.reject(err))
 }
-
-export function syncTagList() {
-  return (dispatch) => {
-    fetch('http://localhost:3000/tag-list').then(res => res.json()).then(data => {
-      storeData('tag-list', data)
-      // dispatch({
-      //   type: 'UPDATE_TAG_LIST',
-      //   payload: data.tags
-      // })
-    })
-  }
-}
-
-export function syncSubscriptionList() {
-  return (dispatch) => {
-    fetch('http://localhost:3000/subscription-list').then(res => res.json()).then(data => {
-      storeData('subscriptions', data)
-      // dispatch({
-      //   type: 'UPDATE_SUBSCRIPTION_LIST',
-      //   payload: data.subscriptions
-      // })
-    })
-  }
-}
-
-// export function fetchData(name) {
-//   return fetch(`http://localhost:3000/${name}`).then(res => res.json())
-// }
 
 export function readLocalData(names) {
   return (dispatch) => {

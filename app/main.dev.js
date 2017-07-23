@@ -107,7 +107,26 @@ ipcMain.on('oauth', (event) => {
   oauth.getAccessToken(
     { scope: 'read' }
   ).then(tokenObj => {
-    console.log(tokenObj)
+    const authObj = {
+      'last-update': Date.now(),
+      'token-info': tokenObj
+    }
+    console.log(authObj)
+    event.sender.send('store-auth-info', authObj)
+  })
+})
+
+ipcMain.on('refresh-token', (event) => {
+  debugger
+  oauth.refreshToken(
+    '8e4646ebe959876f6afcdb88cd6c40100e1a11c1'
+  ).then(tokenObj => {
+    const authObj = {
+      'last-update': Date.now(),
+      'token-info': tokenObj
+    }
+    console.log(authObj)
+    event.sender.send('store-auth-info', authObj)
   })
 })
 
