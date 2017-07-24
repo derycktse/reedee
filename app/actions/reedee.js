@@ -1,5 +1,6 @@
 import * as Config from '../../config'
 import { ipcRenderer } from 'electron'
+import throttle from 'lodash/throttle'
 let toFetchArray = []
 
 
@@ -12,22 +13,18 @@ ipcRenderer.on('store-auth-info', (event, authObj) => {
 })
 
 function clearToFetch() {
-  console.log(`clearToFetch`)
-  console.log(`toFetchArray.length: ${toFetchArray.length}`)
   while (toFetchArray.length > 0) {
     const fun = toFetchArray.splice(0, 1)[0]
-    console.log(`typeof fun:${typeof fun}`)
     if (typeof fun === 'function') {
-      console.log('resolve function!')
-      console.log(fun)
       fun()
     }
   }
-  console.log(`clearToFetch done `)
-  console.log(`toFetchArray.length: ${toFetchArray.length}`)
 }
 
-function sendAuth() {
+const refreshToken = throttle(sendRefreshDirection, 3000, { trailing: false})
+
+function sendRefreshDirection() {
+  console.log('request refresh')
   ipcRenderer.send('refresh-token')
 }
 
@@ -70,8 +67,7 @@ export function fetchData(name) {
       return fetchData(name)
     })
     toFetchArray.push(resolver)
-    console.log(toFetchArray)
-    sendAuth()
+    refreshToken()
     return pm
   }
 

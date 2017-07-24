@@ -54,6 +54,16 @@ Folder.propTypes = {
   id: React.PropTypes.string.isRequired,
   isClosed: React.PropTypes.bool
 }
+
+const ToolBox = ({onSync}) => {
+  return (
+    <div className={styles['tool-box']}>
+      <a onClick={onSync}><i className="material-icons">refresh</i></a>
+      <a><i className="material-icons">add</i></a>
+    </div>
+  )
+}
+
 class SubscriptionFolderView extends Component {
   render() {
     const { subscriptionFolder, onSync, onFolderToggle } = this.props
@@ -65,6 +75,7 @@ class SubscriptionFolderView extends Component {
 
           return <Folder {...folder} onFolderToggle={onFolderToggle} key={folder.id} />
         })}
+        <ToolBox onSync={onSync}/>
       </div>
     )
   }
