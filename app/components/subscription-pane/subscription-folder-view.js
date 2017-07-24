@@ -35,8 +35,8 @@ const Folder = ({
       <div >
         <a onClick={() => {
           onFolderToggle(id)
-        }}><i className={isClosed ? styles.more : styles.more_unfold} ></i></a>
-        <span>{folderName} </span>{isClosed ? 'no' : 'yes'}</div>
+        }}><span><i className="material-icons">{isClosed ? 'keyboard_arrow_right' : 'keyboard_arrow_down'}</i>{folderName} </span></a>
+      </div>
       <ul className={isClosed ? styles['closed'] : ''}>
         {
           subscriptions.map(subscription => {
