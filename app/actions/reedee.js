@@ -12,6 +12,16 @@ ipcRenderer.on('store-auth-info', (event, authObj) => {
 
 })
 
+
+function serialize(obj) {
+  let str = [];
+  for (let p in obj)
+    if (obj.hasOwnProperty(p)) {
+      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    }
+  return str.join("&");
+}
+
 function clearToFetch() {
   while (toFetchArray.length > 0) {
     const fun = toFetchArray.splice(0, 1)[0]
@@ -21,7 +31,7 @@ function clearToFetch() {
   }
 }
 
-const refreshToken = throttle(sendRefreshDirection, 3000, { trailing: false})
+const refreshToken = throttle(sendRefreshDirection, 3000, { trailing: false })
 
 function sendRefreshDirection() {
   console.log('request refresh')
@@ -58,7 +68,7 @@ export function fetchDataCollection(names) {
   return Promise.all(pmArr)
 }
 
-export function fetchData(name) {
+export function fetchData(name, params = {}) {
   if (!authValidate()) {
     let resolver = null
     const pm = new Promise((resolve, reject) => {
@@ -74,11 +84,13 @@ export function fetchData(name) {
   const authInfo = JSON.parse(localStorage.getItem('auth-info'))
   const tokenInfo = authInfo["token-info"]
 
+  const queryString = '?' + serialize(params)
+
   const apiList = Config.default.apiList
   const auth = Config.default.auth
   const url = `${Config.default.serverUrl}${apiList.prefix}${apiList[name].api}?AppId=${auth.AppId}&AppKey=${auth.AppKey}`
   const token = tokenInfo.access_token
-  return fetch(url, {
+  return fetch(`${url}${queryString}`, {
     method: 'GET',
     headers: {
       'Accept': 'application/json',

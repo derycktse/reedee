@@ -2,15 +2,6 @@
 import { connect } from 'react-redux'
 import SubscriptionFolderView from './subscription-folder-view'
 import * as ReedeeActions from '../../actions/reedee'
-// const Nothing = () => {
-//   return null
-// }
-
-// const statusController = JSON.parse(localStorage.getItem('subscription-panel-status-controller')) || {}
-
-// if (typeof statusController['folderToggleInfo'] !== {})
-//   statusController['folderToggleInfo'] = {}
-
 
 const mapSubscriptions = ({ subscriptions = [], tags = [], unreadCounts,
   statusController }) => {

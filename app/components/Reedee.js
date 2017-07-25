@@ -11,9 +11,13 @@ export default class Reedee extends Component {
     return (
       <MuiThemeProvider>
         <div id="reedee">
-          <SplitPane split="vertical" minSize={50} defaultSize='250'>
+          <SplitPane split="vertical" minSize={250}>
             <SubscriptPane name="deryck" />
-            <SubscriptionMenu className={styles.subscriptionMenu} />
+            <SplitPane split="vertical" minSize={250}>
+              <SubscriptionMenu className={styles.subscriptionMenu} />
+              <div>ab</div>
+            </SplitPane>
+
           </SplitPane>
         </div>
       </MuiThemeProvider>
