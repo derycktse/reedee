@@ -33,8 +33,9 @@ const Folder = ({
   return (
     <div className={styles['subscription-folder']}>
       <div >
-        <a onClick={() => {
+        <a onClick={(e) => {
           onFolderToggle(id)
+          e.preventDefault()
         }}><span><i className="material-icons">{isClosed ? 'keyboard_arrow_right' : 'keyboard_arrow_down'}</i>{folderName} </span></a>
       </div>
       <ul className={isClosed ? styles['closed'] : ''}>
@@ -55,7 +56,7 @@ Folder.propTypes = {
   isClosed: React.PropTypes.bool
 }
 
-const ToolBox = ({onSync}) => {
+const ToolBox = ({ onSync }) => {
   return (
     <div className={styles['tool-box']}>
       <a onClick={onSync}><i className="material-icons">refresh</i></a>
@@ -68,14 +69,13 @@ class SubscriptionFolderView extends Component {
   render() {
     const { subscriptionFolder, onSync, onFolderToggle } = this.props
     return (
-      <div>
-        <div><button onClick={onSync}>sync from server</button></div>
+      <div className={styles['subscription-folder-pane']}>
         {subscriptionFolder.map(folder => {
           if (folder.subscriptions.length === 0) return null
 
           return <Folder {...folder} onFolderToggle={onFolderToggle} key={folder.id} />
         })}
-        <ToolBox onSync={onSync}/>
+        <ToolBox onSync={onSync} />
       </div>
     )
   }
