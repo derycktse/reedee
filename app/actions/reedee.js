@@ -62,8 +62,12 @@ export function fetchSubcriptionList() {
 export function fetchDataCollection(names) {
   if (!Array.isArray(names)) throw Error('the param must be an array')
 
-  const pmArr = names.map(name => {
-    return fetchData(name)
+  const pmArr = names.map(item => {
+    if (typeof item === 'object') {
+      return fetchData(item.name, item.params)
+    } else {
+      return fetchData(item)
+    }
   })
   return Promise.all(pmArr)
 }
@@ -84,7 +88,7 @@ export function fetchData(name, params = {}) {
   const authInfo = JSON.parse(localStorage.getItem('auth-info'))
   const tokenInfo = authInfo["token-info"]
 
-  const queryString = '?' + serialize(params)
+  const queryString = '&' + serialize(params)
 
   const apiList = Config.default.apiList
   const auth = Config.default.auth

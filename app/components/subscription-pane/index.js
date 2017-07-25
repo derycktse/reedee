@@ -88,12 +88,20 @@ function mapDispatchToProps(dispatch) {
     onSync: () => {
 
       // fetch necesssary data
-      const list = ["subscription-list", 'tag-list', 'unread-count']
+      const list = ['subscription-list', 'tag-list', 'unread-count', {
+        name: 'stream/contents',
+        params: {
+          n: 100,
+          xt: 'user/-/state/com.google/read'
+        }
+      }]
+
+      // const enread = ReedeeActions.fetchData(, ).then(data)
       ReedeeActions.fetchDataCollection(list).then(collections => {
 
         const payload = collections.map((data, idx) => {
           return {
-            itemName: list[idx],
+            itemName: list[idx] === 'string' ?list[idx]  :list[idx].name,
             data
           }
         })

@@ -18,7 +18,7 @@ function getInitState(...names) {
   return obj
 }
 
-const initList = ['subscription-list', 'tag-list', 'unread-count', 'subscription-panel-status-controller']
+const initList = ['subscription-list', 'tag-list', 'unread-count', 'subscription-panel-status-controller', 'stream/contents']
 const initState = getInitState(...initList)
 console.log('init state:')
 console.log(initState)

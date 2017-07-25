@@ -70,7 +70,7 @@ const apiList = {
     type: '1'
   },
   'stream/contents': {
-    api: `${prefix}/stream/contents`,
+    api: `/stream/contents`,
     type: '1'
   },
   'items/contents': {
