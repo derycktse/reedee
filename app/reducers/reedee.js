@@ -1,29 +1,66 @@
 import { combineReducers } from 'redux';
 
-function subscriptionList(state = getInitState('subscription-list'), type) {
+const SUBSCRIPTION_LIST = 'subscription-list'
+const TAG_LIST = 'tag-list'
+const UNREAD_COUNT = 'unread-count'
+const PAGE_CONTROLLER = 'subscription-panel-status-controller'
+const STREAM_CONTENT = 'stream/contents'
+
+function subscriptionList(state = getInitState('subscription-list'), action) {
+  switch (action.type) {
+    case 'UPDATE_DATA':
+      return {
+        ...action.payload[SUBSCRIPTION_LIST]|| {}
+      }
+    default:
+  }
   return state
 }
-function tagList(state = getInitState('tag-list'), type) {
+function tagList(state = getInitState('tag-list'), action) {
+  switch (action.type) {
+    case 'UPDATE_DATA':
+      return {
+        ...action.payload[TAG_LIST] || {}
+      }
+    default:
+  }
   return state
 }
-function unreadCount(state = getInitState('unread-count'), type) {
+function unreadCount(state = getInitState('unread-count'), action) {
+  switch (action.type) {
+    case 'UPDATE_DATA':
+      return {
+        ...action.payload[UNREAD_COUNT]|| {}
+      }
+    default:
+  }
   return state
 }
-function panelController(state = getInitState('subscription-panel-status-controller'), type) {
+function panelController(state = getInitState('subscription-panel-status-controller'), action) {
+  switch (action.type) {
+    case 'UPDATE_DATA':
+      return {
+        ...action.payload[PAGE_CONTROLLER]|| {}
+      }
+    default:
+  }
   return state
 }
-function streamContent(state = getInitState('stream/contents'), type) {
+function streamContent(state = getInitState('stream/contents'), action) {
+  switch (action.type) {
+    case 'UPDATE_DATA':
+      return {
+        ...action.payload[STREAM_CONTENT]|| {}
+      }
+    default:
+  }
   return state
 }
 
-function getInitState(...names) {
-  const obj = {}
-  names.forEach(name => {
-    obj[name] = JSON.parse(window.localStorage.getItem(name)) || {}
-  })
-  return obj
+function getInitState(name) {
+  return JSON.parse(window.localStorage.getItem(name)) || {}
 }
-
+/*
 const initList = ['subscription-list', 'tag-list', 'unread-count', 'subscription-panel-status-controller', 'stream/contents']
 
 
@@ -46,3 +83,12 @@ export default function reedee(state = initState, action) {
       return state
   }
 }
+*/
+
+export default combineReducers({
+  [SUBSCRIPTION_LIST]: subscriptionList,
+  [TAG_LIST]: tagList,
+  [UNREAD_COUNT]: unreadCount,
+  [PAGE_CONTROLLER]: panelController,
+  [STREAM_CONTENT]: streamContent
+})
