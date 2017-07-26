@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import SubscriptionMenu from '../components/Subscription-menu'
 import SubscriptPane from './subscription-pane/'
 import FeedPane from './feed-pane/'
+import FeedContentPane from './feed-content-pane/'
 import styles from './Reedee.css'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import SplitPane from 'react-split-pane'
@@ -16,7 +17,7 @@ export default class Reedee extends Component {
             <SubscriptPane name="deryck" />
             <SplitPane split="vertical" minSize={250}>
               <FeedPane />
-              <SubscriptionMenu className={styles.subscriptionMenu} />
+              <FeedContentPane />
             </SplitPane>
 
           </SplitPane>

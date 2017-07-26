@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styles from './subscription-folder-view.css'
+import { Link } from 'react-router-dom';
 
 const Subscription = ({ iconUrl, title, unreadCount }) => {
   return (
@@ -60,6 +61,7 @@ const ToolBox = ({ onSync }) => {
   return (
     <div className={styles['tool-box']}>
       <a onClick={onSync}><i className="material-icons">refresh</i></a>
+      <Link to="/"><i className="material-icons">home</i></Link>
       <a><i className="material-icons">add</i></a>
     </div>
   )
