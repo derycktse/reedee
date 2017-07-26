@@ -2,6 +2,7 @@ import React from 'react'
 import styles from './feed-view.css'
 
 const Feed = ({
+  id,
   title,
   contentPreview,
   viewFeedContent

@@ -2,7 +2,10 @@ import { connect } from 'react-redux'
 import FeedsView from './subscription-item-view'
 
 const viewFeedContent = (dispatch) => (feedId) => {
-
+  dispatch({
+    type: 'VIEW_FEED_CONTENT',
+    activeFeedId: feedId
+  })
 }
 
 
@@ -14,7 +17,8 @@ function mapStateToProps(state) {
       },
     'subscription-list': {
         subscriptions
-      }
+      },
+    'subscription-panel-status-controller': statusController
     }
  } = state
 
@@ -36,7 +40,8 @@ function mapStateToProps(state) {
   const visibleFeeds = rawFeeds
   console.log(visibleFeeds)
   return {
-    visibleFeeds
+    visibleFeeds,
+    statusController
   }
 }
 
@@ -46,4 +51,12 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps)(FeedsView)
+// function mergeProps(stateProps, dispatchProps) {
+//   return {
+//     ...stateProps,
+//     ...dispatchProps,
+//     viewFeedContent: viewFeedContent(dispatch)(statePropsstatusController)
+//   }
+// }
+
+export default connect(mapStateToProps, mapDispatchToProps)(FeedsView)

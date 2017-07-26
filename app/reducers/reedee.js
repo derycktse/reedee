@@ -10,7 +10,7 @@ function subscriptionList(state = getInitState('subscription-list'), action) {
   switch (action.type) {
     case 'UPDATE_DATA':
       return {
-        ...action.payload[SUBSCRIPTION_LIST]|| {}
+        ...action.payload[SUBSCRIPTION_LIST] || {}
       }
     default:
   }
@@ -30,7 +30,7 @@ function unreadCount(state = getInitState('unread-count'), action) {
   switch (action.type) {
     case 'UPDATE_DATA':
       return {
-        ...action.payload[UNREAD_COUNT]|| {}
+        ...action.payload[UNREAD_COUNT] || {}
       }
     default:
   }
@@ -40,7 +40,12 @@ function panelController(state = getInitState('subscription-panel-status-control
   switch (action.type) {
     case 'UPDATE_DATA':
       return {
-        ...action.payload[PAGE_CONTROLLER]|| {}
+        ...action.payload[PAGE_CONTROLLER] || {}
+      }
+    case 'VIEW_FEED_CONTENT':
+      return {
+        ...state,
+        activeFeedId: action.activeFeedId
       }
     default:
   }
@@ -50,7 +55,7 @@ function streamContent(state = getInitState('stream/contents'), action) {
   switch (action.type) {
     case 'UPDATE_DATA':
       return {
-        ...action.payload[STREAM_CONTENT]|| {}
+        ...action.payload[STREAM_CONTENT] || {}
       }
     default:
   }
