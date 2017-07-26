@@ -1,13 +1,14 @@
 import React from 'react'
+import styles from './feed-view.css'
 
 const Feed = ({
   title,
   contentPreview
 }) => {
   return (
-    <li>
+    <li className={styles.feed}>
       <div></div>
-      <p>{title}</p>
+      <p >{title}</p>
       <p>{contentPreview}</p>
     </li>
   )
@@ -16,8 +17,9 @@ const Feed = ({
 const FeedsView = ({
   visibleFeeds
 }) => {
+  console.log(`visibleFees length : ${visibleFeeds.length}`)
   return (
-    <div>
+    <div className={styles['feeds-view']}>
       <ul>
         {
           visibleFeeds.map((feed) => {

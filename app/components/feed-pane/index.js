@@ -21,10 +21,15 @@ function mapStateToProps(state) {
         streamId
       }
     } = feed
-    subscriptionFeedMap[streamId] = feed
+    if (!subscriptionFeedMap[streamId]) {
+      subscriptionFeedMap[streamId] = []
+    }
+    subscriptionFeedMap[streamId].push(feed)
+    return subscriptionFeedMap
   }, subscriptionFeedMap)
 
-  const visibleFeeds = Object.keys(subscriptionFeedMap).map(key => subscriptionFeedMap[key])
+  const visibleFeeds = rawFeeds
+  console.log(visibleFeeds)
   return {
     visibleFeeds
   }

@@ -88,25 +88,44 @@ function mapDispatchToProps(dispatch) {
     onSync: () => {
 
       // fetch necesssary data
-      const list = ['subscription-list', 'tag-list', 'unread-count', {
-        name: 'stream/contents',
-        params: {
-          n: 100,
-          xt: 'user/-/state/com.google/read'
-        }
-      }]
+      const list = [
+        {
+          name: 'subscription-list',
+          params: {
+            n: 100,
+            xt: 'user/-/state/com.google/read'
+          }
+        }, {
+          name: 'tag-list',
+          params: {
+            n: 100,
+            xt: 'user/-/state/com.google/read'
+          }
+        }, {
+          name: 'unread-count',
+          params: {
+            n: 100,
+            xt: 'user/-/state/com.google/read'
+          }
+        }, {
+          name: 'stream/contents',
+          params: {
+            n: 100,
+            xt: 'user/-/state/com.google/read'
+          }
+        }]
 
       // const enread = ReedeeActions.fetchData(, ).then(data)
       ReedeeActions.fetchDataCollection(list).then(collections => {
 
         const payload = collections.map((data, idx) => {
           return {
-            itemName: list[idx] === 'string' ?list[idx]  :list[idx].name,
+            itemName: typeof list[idx] === 'string' ? list[idx] : list[idx].name,
             data
           }
         })
         ReedeeActions.storeData(payload)
-        ReedeeActions.readLocalData(list)(dispatch)
+        ReedeeActions.readLocalData(list.map(item => item.name))(dispatch)
       })
     },
     onFolderToggle: onFolderToggle(dispatch)

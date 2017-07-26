@@ -110,10 +110,6 @@ export function readLocalData(names) {
 
     const obj = {}
     items.forEach(name => {
-      // obj = {
-      //   ...obj,
-      //   ...(JSON.parse(localStorage.getItem(name)) || {})
-      // }
       obj[name] = JSON.parse(localStorage.getItem(name)) || {}
     })
     dispatch({

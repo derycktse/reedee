@@ -1,0 +1,10 @@
+.feeds-view{
+  overflow-y: scroll;
+  height:100%
+}
+.feed{
+  font-size: 30px
+}
+.feed p{
+  font-size: 12px
+}
