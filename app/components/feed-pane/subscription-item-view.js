@@ -3,19 +3,25 @@ import styles from './feed-view.css'
 
 const Feed = ({
   title,
-  contentPreview
+  contentPreview,
+  viewFeedContent
 }) => {
   return (
     <li className={styles.feed}>
-      <div></div>
-      <p >{title}</p>
-      <p>{contentPreview}</p>
+      <a onClick={() => {
+        viewFeedContent(id)
+      }}>
+        <div></div>
+        <p >{title}</p>
+        <p>{contentPreview}</p>
+      </a>
     </li>
   )
 }
 
 const FeedsView = ({
-  visibleFeeds
+  visibleFeeds,
+  viewFeedContent
 }) => {
   console.log(`visibleFees length : ${visibleFeeds.length}`)
   return (
@@ -23,7 +29,7 @@ const FeedsView = ({
       <ul>
         {
           visibleFeeds.map((feed) => {
-            return <Feed {...feed} key={feed.id} />
+            return <Feed {...feed} key={feed.id} viewFeedContent={viewFeedContent} />
           })
         }
       </ul>

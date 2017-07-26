@@ -1,6 +1,11 @@
 import { connect } from 'react-redux'
 import FeedsView from './subscription-item-view'
 
+const viewFeedContent = (dispatch) => (feedId) => {
+
+}
+
+
 function mapStateToProps(state) {
   const {
     reedee: {
@@ -32,6 +37,12 @@ function mapStateToProps(state) {
   console.log(visibleFeeds)
   return {
     visibleFeeds
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    viewFeedContent: viewFeedContent(dispatch)
   }
 }
 
