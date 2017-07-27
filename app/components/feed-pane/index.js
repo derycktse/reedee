@@ -51,7 +51,7 @@ function mapStateToProps(state) {
 
   let activeSubscriptionId = statusController['activeSubscriptionId']
   if (activeSubscriptionId) {
-    visibleFeeds.push(...subscriptionFeedMap[activeSubscriptionId])
+    visibleFeeds.push(...subscriptionFeedMap[activeSubscriptionId] || [])
   }
   else {
     visibleFeeds.push(...rawFeeds)

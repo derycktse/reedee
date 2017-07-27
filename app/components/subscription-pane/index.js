@@ -99,25 +99,19 @@ function mapDispatchToProps(dispatch) {
         {
           name: 'subscription-list',
           params: {
-            n: 100,
-            xt: 'user/-/state/com.google/read'
           }
         }, {
           name: 'tag-list',
           params: {
-            n: 100,
-            xt: 'user/-/state/com.google/read'
           }
         }, {
           name: 'unread-count',
           params: {
-            n: 100,
-            xt: 'user/-/state/com.google/read'
           }
         }, {
           name: 'stream/contents',
           params: {
-            n: 100,
+            n: 1000,
             xt: 'user/-/state/com.google/read'
           }
         }]
