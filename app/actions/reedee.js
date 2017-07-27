@@ -1,5 +1,6 @@
 import * as Config from '../../config'
 import { ipcRenderer } from 'electron'
+import throttle from 'lodash/throttle'
 let toFetchArray = []
 
 
@@ -11,23 +12,29 @@ ipcRenderer.on('store-auth-info', (event, authObj) => {
 
 })
 
+
+function serialize(obj) {
+  let str = [];
+  for (let p in obj)
+    if (obj.hasOwnProperty(p)) {
+      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    }
+  return str.join("&");
+}
+
 function clearToFetch() {
-  console.log(`clearToFetch`)
-  console.log(`toFetchArray.length: ${toFetchArray.length}`)
   while (toFetchArray.length > 0) {
     const fun = toFetchArray.splice(0, 1)[0]
-    console.log(`typeof fun:${typeof fun}`)
     if (typeof fun === 'function') {
-      console.log('resolve function!')
-      console.log(fun)
       fun()
     }
   }
-  console.log(`clearToFetch done `)
-  console.log(`toFetchArray.length: ${toFetchArray.length}`)
 }
 
-function sendAuth() {
+const refreshToken = throttle(sendRefreshDirection, 3000, { trailing: false })
+
+function sendRefreshDirection() {
+  console.log('request refresh')
   ipcRenderer.send('refresh-token')
 }
 
@@ -55,13 +62,17 @@ export function fetchSubcriptionList() {
 export function fetchDataCollection(names) {
   if (!Array.isArray(names)) throw Error('the param must be an array')
 
-  const pmArr = names.map(name => {
-    return fetchData(name)
+  const pmArr = names.map(item => {
+    if (typeof item === 'object') {
+      return fetchData(item.name, item.params)
+    } else {
+      return fetchData(item)
+    }
   })
   return Promise.all(pmArr)
 }
 
-export function fetchData(name) {
+export function fetchData(name, params = {}) {
   if (!authValidate()) {
     let resolver = null
     const pm = new Promise((resolve, reject) => {
@@ -70,19 +81,20 @@ export function fetchData(name) {
       return fetchData(name)
     })
     toFetchArray.push(resolver)
-    console.log(toFetchArray)
-    sendAuth()
+    refreshToken()
     return pm
   }
 
   const authInfo = JSON.parse(localStorage.getItem('auth-info'))
   const tokenInfo = authInfo["token-info"]
 
+  const queryString = '&' + serialize(params)
+
   const apiList = Config.default.apiList
   const auth = Config.default.auth
   const url = `${Config.default.serverUrl}${apiList.prefix}${apiList[name].api}?AppId=${auth.AppId}&AppKey=${auth.AppKey}`
   const token = tokenInfo.access_token
-  return fetch(url, {
+  return fetch(`${url}${queryString}`, {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
@@ -98,10 +110,6 @@ export function readLocalData(names) {
 
     const obj = {}
     items.forEach(name => {
-      // obj = {
-      //   ...obj,
-      //   ...(JSON.parse(localStorage.getItem(name)) || {})
-      // }
       obj[name] = JSON.parse(localStorage.getItem(name)) || {}
     })
     dispatch({

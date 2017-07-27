@@ -1,17 +1,28 @@
 import React, { Component } from 'react'
-import SubscriptionFolder from '../components/Subscription-folder'
 import SubscriptionMenu from '../components/Subscription-menu'
 import SubscriptPane from './subscription-pane/'
+import FeedPane from './feed-pane/'
+import FeedContentPane from './feed-content-pane/'
 import styles from './Reedee.css'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import SplitPane from 'react-split-pane'
 
 
 export default class Reedee extends Component {
   render() {
     return (
-      <div id="reedee">
-        <SubscriptPane name="deryck" />
-        <SubscriptionMenu className={styles.subscriptionMenu} />
-      </div>
+      <MuiThemeProvider>
+        <div id="reedee">
+          <SplitPane split="vertical" minSize={250}>
+            <SubscriptPane name="deryck" />
+            <SplitPane split="vertical" minSize={250}>
+              <FeedPane />
+              <FeedContentPane />
+            </SplitPane>
+
+          </SplitPane>
+        </div>
+      </MuiThemeProvider>
     )
   }
 }

@@ -117,7 +117,6 @@ ipcMain.on('oauth', (event) => {
 })
 
 ipcMain.on('refresh-token', (event) => {
-  debugger
   oauth.refreshToken(
     '8e4646ebe959876f6afcdb88cd6c40100e1a11c1'
   ).then(tokenObj => {

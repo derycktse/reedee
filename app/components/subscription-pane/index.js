@@ -2,15 +2,6 @@
 import { connect } from 'react-redux'
 import SubscriptionFolderView from './subscription-folder-view'
 import * as ReedeeActions from '../../actions/reedee'
-// const Nothing = () => {
-//   return null
-// }
-
-// const statusController = JSON.parse(localStorage.getItem('subscription-panel-status-controller')) || {}
-
-// if (typeof statusController['folderToggleInfo'] !== {})
-//   statusController['folderToggleInfo'] = {}
-
 
 const mapSubscriptions = ({ subscriptions = [], tags = [], unreadCounts,
   statusController }) => {
@@ -68,6 +59,13 @@ const onFolderToggle = (dispatch) => (statusController) => (folderId) => {
   })
 }
 
+const onSubscriptionSelect = (dispatch) => (statusController) => (id) => {
+  dispatch({
+    type: 'CHANGE_SELECTED_SUBSCRIPTION',
+    payload: id
+  })
+}
+
 function mapStateToProps(state) {
   const {
     reedee: {
@@ -97,20 +95,42 @@ function mapDispatchToProps(dispatch) {
     onSync: () => {
 
       // fetch necesssary data
-      const list = ["subscription-list", 'tag-list', 'unread-count']
+      const list = [
+        {
+          name: 'subscription-list',
+          params: {
+          }
+        }, {
+          name: 'tag-list',
+          params: {
+          }
+        }, {
+          name: 'unread-count',
+          params: {
+          }
+        }, {
+          name: 'stream/contents',
+          params: {
+            n: 1000,
+            xt: 'user/-/state/com.google/read'
+          }
+        }]
+
+      // const enread = ReedeeActions.fetchData(, ).then(data)
       ReedeeActions.fetchDataCollection(list).then(collections => {
 
         const payload = collections.map((data, idx) => {
           return {
-            itemName: list[idx],
+            itemName: typeof list[idx] === 'string' ? list[idx] : list[idx].name,
             data
           }
         })
         ReedeeActions.storeData(payload)
-        ReedeeActions.readLocalData(list)(dispatch)
+        ReedeeActions.readLocalData(list.map(item => item.name))(dispatch)
       })
     },
-    onFolderToggle: onFolderToggle(dispatch)
+    onFolderToggle: onFolderToggle(dispatch),
+    onSubscriptionSelect: onSubscriptionSelect(dispatch)
   }
 }
 
@@ -119,7 +139,8 @@ function mergeProps(stateProps, dispatchProps) {
   return {
     ...stateProps,
     ...dispatchProps,
-    onFolderToggle: dispatchProps.onFolderToggle(stateProps.statusController)
+    onFolderToggle: dispatchProps.onFolderToggle(stateProps.statusController),
+    onSubscriptionSelect: dispatchProps.onSubscriptionSelect(stateProps.statusController)
   }
 }
 

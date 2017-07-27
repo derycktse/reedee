@@ -1,19 +1,21 @@
 import React, { Component } from 'react'
 import styles from './subscription-folder-view.css'
+import { Link } from 'react-router-dom';
 
-const Subscription = ({ iconUrl, title, unreadCount }) => {
+const Subscription = ({ iconUrl, title, unreadCount, onSubscriptionSelect, id }) => {
   return (
     <li>
-      <div className={styles['subscription-item']}>
-        <div>
-          <img src={iconUrl} alt={title} />
-          <span>{title}</span>
+      <a onClick={() => { onSubscriptionSelect(id) }}>
+        <div className={styles['subscription-item']}>
+          <div>
+            <img src={iconUrl} alt={title} />
+            <span>{title}</span>
+          </div>
+          <div>
+            <span>{unreadCount}</span>
+          </div>
         </div>
-        <div>
-          <span>{unreadCount}</span>
-        </div>
-      </div>
-
+      </a>
     </li>
   )
 }
@@ -28,19 +30,23 @@ const Folder = ({
   subscriptions = [],
   onFolderToggle = () => { },
   id,
-  isClosed
+  isClosed,
+  onSubscriptionSelect
 }) => {
   return (
     <div className={styles['subscription-folder']}>
       <div >
-        <a onClick={() => {
+        <a onClick={(e) => {
           onFolderToggle(id)
-        }}><i className={isClosed ? styles.more : styles.more_unfold} ></i></a>
-        <span>{folderName} </span>{isClosed ? 'no' : 'yes'}</div>
+          e.preventDefault()
+        }}><i className="material-icons">{isClosed ? 'keyboard_arrow_right' : 'keyboard_arrow_down'}</i></a><a onClick={() => {
+          onSubscriptionSelect(id)
+        }}><span>{folderName} </span></a>
+      </div>
       <ul className={isClosed ? styles['closed'] : ''}>
         {
           subscriptions.map(subscription => {
-            return <Subscription {...subscription} key={subscription.id} />
+            return <Subscription onSubscriptionSelect={onSubscriptionSelect} {...subscription} key={subscription.id} />
           })
         }
       </ul>
@@ -54,17 +60,28 @@ Folder.propTypes = {
   id: React.PropTypes.string.isRequired,
   isClosed: React.PropTypes.bool
 }
+
+const ToolBox = ({ onSync }) => {
+  return (
+    <div className={styles['tool-box']}>
+      <a onClick={onSync}><i className="material-icons">refresh</i></a>
+      <Link to="/"><i className="material-icons">home</i></Link>
+      <a><i className="material-icons">add</i></a>
+    </div>
+  )
+}
+
 class SubscriptionFolderView extends Component {
   render() {
-    const { subscriptionFolder, onSync, onFolderToggle } = this.props
+    const { subscriptionFolder, onSync, onFolderToggle, onSubscriptionSelect } = this.props
     return (
-      <div>
-        <div><button onClick={onSync}>sync from server</button></div>
+      <div className={styles['subscription-folder-pane']}>
         {subscriptionFolder.map(folder => {
           if (folder.subscriptions.length === 0) return null
 
-          return <Folder {...folder} onFolderToggle={onFolderToggle} key={folder.id} />
+          return <Folder {...folder} onFolderToggle={onFolderToggle} onSubscriptionSelect={onSubscriptionSelect} key={folder.id} />
         })}
+        <ToolBox onSync={onSync} />
       </div>
     )
   }
