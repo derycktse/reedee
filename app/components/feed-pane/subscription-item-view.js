@@ -8,11 +8,11 @@ const Feed = ({
   viewFeedContent,
   origin: { title: feedName },
   crawlTimeMsec,
+  activeFeedId
 }) => {
   let date = new Date(parseInt(crawlTimeMsec, 10)).toLocaleString()
-  console.log(date)
   return (
-    <li className={styles.feed}>
+    <li className={`${styles.feed} ${activeFeedId === id ? styles.active : ''}`}>
       <a onClick={() => {
         viewFeedContent(id)
       }}>
@@ -26,15 +26,17 @@ const Feed = ({
 
 const FeedsView = ({
   visibleFeeds,
-  viewFeedContent
+  viewFeedContent,
+  statusController
 }) => {
   console.log(`visibleFees length : ${visibleFeeds.length}`)
+  let activeFeedId = statusController['activeFeedId']
   return (
     <div className={styles['feeds-view']}>
       <ul>
         {
           visibleFeeds.map((feed) => {
-            return <Feed {...feed} key={feed.id} viewFeedContent={viewFeedContent} />
+            return <Feed {...feed} key={feed.id} viewFeedContent={viewFeedContent} activeFeedId={activeFeedId} />
           })
         }
       </ul>
