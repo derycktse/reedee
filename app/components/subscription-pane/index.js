@@ -59,6 +59,13 @@ const onFolderToggle = (dispatch) => (statusController) => (folderId) => {
   })
 }
 
+const onSubscriptionSelect = (dispatch) => (statusController) => (id) => {
+  dispatch({
+    type: 'CHANGE_SELECTED_SUBSCRIPTION',
+    payload: id
+  })
+}
+
 function mapStateToProps(state) {
   const {
     reedee: {
@@ -128,7 +135,8 @@ function mapDispatchToProps(dispatch) {
         ReedeeActions.readLocalData(list.map(item => item.name))(dispatch)
       })
     },
-    onFolderToggle: onFolderToggle(dispatch)
+    onFolderToggle: onFolderToggle(dispatch),
+    onSubscriptionSelect: onSubscriptionSelect(dispatch)
   }
 }
 
@@ -137,7 +145,8 @@ function mergeProps(stateProps, dispatchProps) {
   return {
     ...stateProps,
     ...dispatchProps,
-    onFolderToggle: dispatchProps.onFolderToggle(stateProps.statusController)
+    onFolderToggle: dispatchProps.onFolderToggle(stateProps.statusController),
+    onSubscriptionSelect: dispatchProps.onSubscriptionSelect(stateProps.statusController)
   }
 }
 

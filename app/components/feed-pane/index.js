@@ -26,10 +26,20 @@ function mapStateToProps(state) {
 
   rawFeeds.reduce((obj, feed) => {
     const {
+      categories,
       origin: {
         streamId
       }
     } = feed
+
+    categories.reduce((obj, id) => {
+      if (!obj[id]) {
+        obj[id] = []
+      }
+      obj[id].push(feed)
+      return obj
+    }, obj)
+
     if (!subscriptionFeedMap[streamId]) {
       subscriptionFeedMap[streamId] = []
     }
@@ -37,7 +47,16 @@ function mapStateToProps(state) {
     return subscriptionFeedMap
   }, subscriptionFeedMap)
 
-  const visibleFeeds = rawFeeds
+  const visibleFeeds = []
+
+  let activeSubscriptionId = statusController['activeSubscriptionId']
+  if (activeSubscriptionId) {
+    visibleFeeds.push(...subscriptionFeedMap[activeSubscriptionId])
+  }
+  else {
+    visibleFeeds.push(...rawFeeds)
+  }
+
   console.log(visibleFeeds)
   return {
     visibleFeeds,

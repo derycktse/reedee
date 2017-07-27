@@ -47,6 +47,16 @@ function panelController(state = getInitState('subscription-panel-status-control
         ...state,
         activeFeedId: action.activeFeedId
       }
+    case 'TOGGLE_FOLDER':
+      return {
+        ...state,
+        ...action.payload
+      }
+    case 'CHANGE_SELECTED_SUBSCRIPTION':
+      return {
+        ...state,
+        activeSubscriptionId: action.payload
+      }
     default:
   }
   return state
