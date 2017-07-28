@@ -24,6 +24,14 @@ const Feed = ({
   )
 }
 
+Feed.propTypes = {
+  id: React.PropTypes.string.isRequired,
+  title: React.PropTypes.string,
+  contentPreview: React.PropTypes.string,
+  viewFeedContent: React.PropTypes.func,
+  activeFeedId: React.PropTypes.string
+}
+
 const FeedsView = ({
   visibleFeeds,
   viewFeedContent,
