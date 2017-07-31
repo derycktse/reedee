@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './feed-view.css'
+import ToolBox from './toolbox'
 
 const Feed = ({
   id,
@@ -48,6 +49,7 @@ const FeedsView = ({
           })
         }
       </ul>
+      <ToolBox />
     </div>
   )
 }
