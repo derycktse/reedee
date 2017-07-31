@@ -1,6 +1,6 @@
 
 import { connect } from 'react-redux'
-import SubscriptionFolderView from './subscription-folder-view'
+import SubscriptionView from './subscription-view'
 import * as ReedeeActions from '../../actions/reedee'
 
 const mapSubscriptions = ({ subscriptions = [], tags = [], unreadCounts,
@@ -144,4 +144,4 @@ function mergeProps(stateProps, dispatchProps) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(SubscriptionFolderView)
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(SubscriptionView)
