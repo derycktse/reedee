@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import styles from './subscription-folder-view.css'
+import styles from './subscription-view.css'
 import { Link } from 'react-router-dom';
 
 const Subscription = ({ iconUrl, title, unreadCount, onSubscriptionSelect, id }) => {
@@ -71,7 +71,7 @@ const ToolBox = ({ onSync }) => {
   )
 }
 
-class SubscriptionFolderView extends Component {
+class SubscriptionView extends Component {
   render() {
     const { subscriptionFolder, onSync, onFolderToggle, onSubscriptionSelect } = this.props
     return (
@@ -87,4 +87,4 @@ class SubscriptionFolderView extends Component {
   }
 }
 
-export default SubscriptionFolderView
+export default SubscriptionView

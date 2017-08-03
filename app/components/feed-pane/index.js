@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import FeedsView from './subscription-item-view'
+import FeedsView from './feed-view'
 
 const viewFeedContent = (dispatch) => (feedId) => {
   dispatch({

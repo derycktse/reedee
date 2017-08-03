@@ -1,9 +1,12 @@
 .feeds-view{
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   height:100%
 }
 .feeds-view ul{
   padding: 0;
+  padding-bottom: 50px;
+  height:100%;
+  overflow-y: scroll;
 }
 .feed{
   font-size: 30px;
@@ -22,4 +25,13 @@
 }
 .active{
   background: rgba(0, 0, 0, 0.4)
+}
+.tool-box{
+  position: absolute;
+  bottom: 0;
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 10px;
 }
