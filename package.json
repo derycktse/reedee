@@ -27,7 +27,8 @@
     "package": "npm run build && build --publish never",
     "package-win": "npm run build && build --win --x64",
     "package-linux": "npm run build && build --linux",
-    "package-all": "npm run build && build -mwl"
+    "package-all": "npm run build && build -mwl",
+    "rebuild": "electron-rebuild -f -w sqlite3"
   },
   "browserslist": "electron 1.6",
   "build": {
@@ -140,6 +141,7 @@
     "electron": "^1.6.10",
     "electron-builder": "^18.0.1",
     "electron-devtools-installer": "^2.2.0",
+    "electron-rebuild": "^1.6.0",
     "enzyme": "^2.8.2",
     "enzyme-to-json": "^1.5.1",
     "eslint": "^3.19.0",
@@ -206,7 +208,8 @@
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
     "request": "^2.81.0",
-    "source-map-support": "^0.4.15"
+    "source-map-support": "^0.4.15",
+    "sqlite3": "^3.1.9"
   },
   "devEngines": {
     "node": ">=6.x",
