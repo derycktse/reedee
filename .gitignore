@@ -48,9 +48,14 @@ dll
 main.js
 main.js.map
 
+#sqlite localdatabases
+databases/
+
 .idea
 npm-debug.log.*
 
 config/cookie.js
 config/auth.js
 config/snippet.md
+
+package-lock.json
